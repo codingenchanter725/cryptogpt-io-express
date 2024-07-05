@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
   const token = req.header('Authorization');
@@ -8,7 +9,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'your_jwt_secret_key'); // Replace with your secret key
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Replace with your secret key
     req.user = decoded; // Attach decoded payload to request object
     next();
   } catch (ex) {
